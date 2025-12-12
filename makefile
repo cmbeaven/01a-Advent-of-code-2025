@@ -1,5 +1,5 @@
 .PHONY:all
-all: 01.out
+all: 01.out 02.out
 
 01.out: 01.cpp
 	g++ $< -o $@
@@ -13,7 +13,7 @@ all: 01.out
 	./$< < 01Short.txt
 
 02.out: 02.cpp
-g++ $< -o $@
+	g++ $< -o $@
 
 .PHONY:01
 02: 02.out
