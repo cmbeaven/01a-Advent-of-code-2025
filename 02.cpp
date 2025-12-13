@@ -10,13 +10,41 @@
 #include <vector>
 #include <utility>
 
+#define P2
+
+long verifyID(long num){
+    std::string temp = std::to_string(num);
+    for(int i = 1; i <= temp.length()/2; i++){
+        // Can only have repeating patterns for evenly divisible lengths
+        if(temp.length()%i == 0){
+            bool patterned = true;
+            std::string pattern = temp.substr(0,i);
+            //printf("pattern: %s\n",pattern.c_str());
+            for(int n = 1; n <= (temp.length()/i)-1; n++){
+                std::string test_pattern = temp.substr(n*i,i);
+                //printf("toMatch: %s\n",test_pattern.c_str());
+                patterned = patterned && (pattern == test_pattern);
+            }
+            if(patterned){
+                return num;
+            }
+        }
+    }
+    
+    return 0;
+}
+
 long verifyPair(std::pair<std::string,std::string>& idPair){
     long illegalSum = 0;
     for(long x = std::stol(idPair.first); x <= std::stol(idPair.second); ++x){
+#ifndef P2
         std::string temp = std::to_string(x);
         //printf("%s %s %s\n",temp.c_str(),temp.substr(0,temp.length()/2).c_str(),temp.substr(temp.length()/2,temp.length()).c_str());
         if(temp.substr(0,temp.length()/2) == temp.substr(temp.length()/2,temp.length()))
             illegalSum += x;
+#else
+        illegalSum += verifyID(x);
+#endif
     }
     return illegalSum;
 }
