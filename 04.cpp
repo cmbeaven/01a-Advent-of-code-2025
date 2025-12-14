@@ -11,14 +11,35 @@
 
 class charMatrix{
     public:
+        struct matrixSize_t{
+            int height;
+            int width;
+        };
         void addRow(std::string_view row);
         char getLocation(int x, int y);
+        matrixSize_t getSize();
     private:
         int rowLength = 0;
         std::vector<std::string> matrix;
 };
 
 int main(int argv, char** argc){
+    charMatrix printFloor;
+    while(!std::cin.eof()){
+        std::string inputLine;
+        getline(std::cin,inputLine);
+        printFloor.addRow(inputLine);
+    }
+    charMatrix::matrixSize_t size = printFloor.getSize();
+
+    for(int i = 0; i < size.height; ++i){
+        for(int j = 0; j < size.width; ++j){
+            std::cout << printFloor.getLocation(i,j);
+        }
+        std::cout << '\n' << std::flush;
+    }
+
+
 
     return 0;
 }
@@ -42,4 +63,11 @@ char charMatrix::getLocation(int x, int y){
         return 0;
     
     return matrix[x][y];
+}
+
+charMatrix::matrixSize_t charMatrix::getSize(){
+    matrixSize_t size;
+    size.height = matrix.size();
+    size.width = rowLength;
+    return size;
 }
