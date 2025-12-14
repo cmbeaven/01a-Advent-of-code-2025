@@ -1,6 +1,10 @@
 .PHONY:all
 all: 01.out 02.out
 
+.PHONY:clean
+clean:
+	rm *.out
+
 01.out: 01.cpp
 	g++ $< -o $@
 
@@ -33,3 +37,12 @@ all: 01.out 02.out
 .PHONY:03s
 03s: 03.out
 	./$< < 03Short.txt
+
+04.out: 04.cpp
+	g++ $< -o $@
+
+04: 04.out
+	./$< < 04.txt
+
+04s: 04.out
+	./$< < 04Short.txt
