@@ -23,6 +23,8 @@ class charMatrix{
         std::vector<std::string> matrix;
 };
 
+bool accessible(charMatrix& matrix, int x, int y);
+
 int main(int argv, char** argc){
     charMatrix printFloor;
     while(!std::cin.eof()){
@@ -32,15 +34,17 @@ int main(int argv, char** argc){
     }
     charMatrix::matrixSize_t size = printFloor.getSize();
 
+    int sum = 0;
     for(int i = 0; i < size.height; ++i){
         for(int j = 0; j < size.width; ++j){
+            if(accessible(printFloor,i,j)){
+                sum++;
+            }
             std::cout << printFloor.getLocation(i,j);
         }
         std::cout << '\n' << std::flush;
     }
-
-
-
+    printf("Accessible: %i\n",sum);
     return 0;
 }
 
@@ -70,4 +74,20 @@ charMatrix::matrixSize_t charMatrix::getSize(){
     size.height = matrix.size();
     size.width = rowLength;
     return size;
+}
+// accessbile if less than 4 @ around it
+bool accessible(charMatrix& matrix, int x, int y){
+    int count = 0;
+    for(int i = -1; i < 2; ++i){
+        for(int j = -1; j < 2; ++j){
+            if(i == 0 && j == 0)
+                continue;
+            if(matrix.getLocation(x+i, y+j) == '@'){
+                count++;
+                if(count == 4)
+                    return false;
+            }
+        }
+    }
+    return true;
 }
