@@ -18,6 +18,7 @@ class charMatrix{
         void addRow(std::string_view row);
         char getLocation(int x, int y);
         matrixSize_t getSize();
+        void changeLocation(char c, int x, int y);
     private:
         int rowLength = 0;
         std::vector<std::string> matrix;
@@ -37,8 +38,9 @@ int main(int argv, char** argc){
     int sum = 0;
     for(int i = 0; i < size.height; ++i){
         for(int j = 0; j < size.width; ++j){
-            if(accessible(printFloor,i,j)){
+            if(printFloor.getLocation(i,j) == '@' && accessible(printFloor,i,j)){
                 sum++;
+                printFloor.changeLocation('x',i,j);
             }
             std::cout << printFloor.getLocation(i,j);
         }
@@ -75,6 +77,20 @@ charMatrix::matrixSize_t charMatrix::getSize(){
     size.width = rowLength;
     return size;
 }
+
+void charMatrix::changeLocation(char c, int x, int y){
+    // check bounds
+    if(x < 0)
+        return;
+    if(y < 0)
+        return;
+    if(y > rowLength)
+        return;
+    if(x > matrix.size())
+        return;
+    matrix[x][y] = c;
+}
+
 // accessbile if less than 4 @ around it
 bool accessible(charMatrix& matrix, int x, int y){
     int count = 0;
@@ -82,7 +98,7 @@ bool accessible(charMatrix& matrix, int x, int y){
         for(int j = -1; j < 2; ++j){
             if(i == 0 && j == 0)
                 continue;
-            if(matrix.getLocation(x+i, y+j) == '@'){
+            if(matrix.getLocation(x+i, y+j) == '@' || matrix.getLocation(x+i,y+i) == 'x'){
                 count++;
                 if(count == 4)
                     return false;
