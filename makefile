@@ -58,3 +58,12 @@ clean:
 
 05s: 05.out
 	./$< < 05Short.txt
+
+06.out: 06.cpp
+	g++ $< -o $@
+
+06: 06.out
+	./$< < 06.txt
+
+06s: 06.out
+	./$< < 06Short.txt
