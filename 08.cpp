@@ -98,7 +98,7 @@ int main(){
     }
 
     std::vector<std::pair<int,int>> connections;
-    for(int i = 0; i < (boxes.size() == 20 ? 10 : 1000); i++){
+    for(int n = 0; n < (boxes.size() == 20 ? 10 : 1000); n++){
         int b1 = 0;
         int b2 = 1;
         double dLowest = distances[0][1];
