@@ -86,3 +86,11 @@ clean:
 08s: 08.out
 	./$< < 08Short.txt
 
+09.out: 09.cpp
+	g++ $< -o $@ -std=c++23
+
+09: 09.out
+	./$< < 09.txt
+
+09s: 09.out
+	./$< < 09Short.txt
